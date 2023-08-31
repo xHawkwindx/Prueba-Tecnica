@@ -1,0 +1,64 @@
+create database StudentsGrades
+
+use StudentsGrades
+
+CREATE TABLE Student (
+	idStudent int PRIMARY key identity,
+	personalId int,
+	StudentName varchar(100),
+	Age int,
+	parentPhoneNumber varchar(20),
+	registrationDate datetime default getdate()
+)
+
+CREATE TABLE Teacher (
+	idTeacher int PRIMARY key identity,
+	personalId int,
+	teacherName varchar(100),
+	Age int,
+	phoneNumber varchar(20),
+	registrationDate datetime default getdate()
+)
+
+CREATE TABLE Course (
+	idCourse int PRIMARY key identity,
+	courseCode varchar(6),
+	courseName varchar(50),	
+	idTeacher int REFERENCES Teacher (idTeacher),
+)
+
+CREATE TABLE StudentsGradesManagement (
+	idStudent int REFERENCES Student(idStudent),
+	idCourse int REFERENCES Course (idCourse),	
+	firstTest decimal,
+	secondTest decimal,
+	thirdTest decimal,
+	finalGrade decimal,
+	constraint chkStudent primary key(idStudent, idCourse), CHECK (firstTest >= 0 AND firstTest <= 5 AND secondTest >= 0 AND secondTest <= 5 
+	AND thirdTest >= 0 AND thirdTest <= 5 AND finalGrade >= 0 AND finalGrade <= 5)
+)
+
+
+
+insert into Student (StudentName, personalId, Age, parentPhoneNumber) values('Carlos Navarro', 1234, 13, '300 1234')
+insert into Student (StudentName, personalId, Age, parentPhoneNumber) values('Paula Gomez', 2345, 12, '301 5365')
+insert into Student (StudentName, personalId, Age, parentPhoneNumber) values('Marlon Moreno', 3456, 11, '302 5345')
+
+insert into Teacher(teacherName, personalId, Age, phoneNumber) values('Claudia Jimenez', 8765, 33, '302 6884')
+insert into Teacher(teacherName, personalId, Age, phoneNumber) values('Jose Lopez', 9876, 53, '303 6521')
+insert into Teacher(teacherName, personalId, Age, phoneNumber) values('Maria Toro', 7654, 45, '303 6521')
+
+-- La Asignacion de un Profesor a un curso se hace mediante la FK 'idTeacher', en este ejemplo se espera que al ejecutarse el script el id incremental de la tabla teacher sean 1,2,3
+
+insert into Course (courseCode,courseName, idTeacher) values('001','Mathematics', 1)
+insert into Course (courseCode, courseName, idTeacher) values('002','English', 2)
+insert into Course (courseCode, courseName, idTeacher) values('003','Geography', 3)
+
+-- Como en la aclaracion anterior se espera que el autoincremetal al insertar los datos de estudiante y cursos sean los estipulados, en caso contrario, la API permite ingresar registros a la tabla para probar
+
+insert into StudentsGradesManagement (idStudent, idCourse) values (1,1)
+insert into StudentsGradesManagement (idStudent, idCourse) values (1,1)
+insert into StudentsGradesManagement (idStudent, idCourse) values (2,2)
+insert into StudentsGradesManagement (idStudent, idCourse) values (1,3)
+insert into StudentsGradesManagement (idStudent, idCourse) values (2,3)
+insert into StudentsGradesManagement (idStudent, idCourse) values (3,2)
