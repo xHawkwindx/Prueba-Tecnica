@@ -1,4 +1,5 @@
 * El proyecto esta alojado en el archivo .rar 'StudentsGrades'
+* El proyecto incluye Swagger, para la facilidad de probar la REST API
 * La configuracion para la conexion a la BD SQL Server esta en el archivo 'appsettings.json'
 
 "ConnectionStrings": {
