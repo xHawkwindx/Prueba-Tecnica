@@ -1,1 +1,5 @@
+La configuracion para la conexion a la BD SQL Server esta en el archivo 'appsettings.json'
 
+"ConnectionStrings": {
+    "connection": "Server=localhost\\SQLEXPRESS; DataBase=StudentsGrades; Trusted_Connection=True;TrustServerCertificate=True"
+  }
